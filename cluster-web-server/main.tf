@@ -44,7 +44,7 @@ resource "aws_security_group" "instance" {
   }
 }
 
-resource "aws_launch_configuration" "example" {
+resource "aws_launch_configuration" "tutorial" {
   image_id        = "ami-de486035"
   instance_type   = "t2.micro"
   security_groups = [aws_security_group.instance.id]
@@ -67,12 +67,12 @@ resource "aws_launch_configuration" "example" {
   }
 }
 
-resource "aws_autoscaling_group" "example" {
-  launch_configuration = aws_launch_configuration.example.id
+resource "aws_autoscaling_group" "tutorial" {
+  launch_configuration = aws_launch_configuration.tutorial.id
   availability_zones   = data.aws_availability_zones.all.names
   min_size = 2
   max_size = 10
-  load_balancers    = [aws_elb.example.name]
+  load_balancers    = [aws_elb.tutorial.name]
   health_check_type = "ELB"
   tag {
     key                 = "Name"
@@ -81,7 +81,7 @@ resource "aws_autoscaling_group" "example" {
   }
 }
 
-resource "aws_elb" "example" {
+resource "aws_elb" "tutorial" {
   name               = "terraform-elastic2ls-elb"
   security_groups    = [aws_security_group.elb.id]
   availability_zones = data.aws_availability_zones.all.names  # This adds a listener for incoming HTTP requests.
@@ -117,6 +117,6 @@ resource "aws_security_group" "elb" {
 }
 
 output "clb_dns_name" {
-  value       = aws_elb.example.dns_name
+  value       = aws_elb.tutorial.dns_name
   description = "The domain name of the load balancer"
 }

@@ -20,7 +20,7 @@ variable "ssh_key" {
   default     = ""
 }
 
-resource "aws_instance" "example" {
+resource "aws_instance" "tutorial" {
   ami           = "ami-de486035"
   instance_type = "t2.micro"
   vpc_security_group_ids = [aws_security_group.instance.id]
@@ -67,7 +67,7 @@ resource "aws_security_group" "instance" {
 
 
 output "public_ip" {
-  value       = aws_instance.example.public_ip
+  value       = aws_instance.tutorial.public_ip
   description = "The public IP of the web server"
 }
 output "server_port" {
